@@ -38,6 +38,7 @@ namespace Screen_Capture {
         std::shared_ptr<Timer> MouseTimer;
         M OnMouseChanged;
         W getThingsToWatch;
+        int MipLevel;
     };
     struct CommonData {
         // Used to indicate abnormal error condition

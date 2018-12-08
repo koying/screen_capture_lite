@@ -4,7 +4,8 @@ project(screen_capture_lite)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
-option(BUILD_SHARED_LIBS "Build shared library" OFF) 
+option(BUILD_DEMO "Build demo input" OFF)
+option(BUILD_SHARED_LIBS "Build shared library" OFF)
 option(BUILD_EXAMPLE "Build example" ON)
 
 if(MSVC)
@@ -13,7 +14,15 @@ else()
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
 endif()
 
-if(WIN32)
+if(${BUILD_DEMO})
+  set(SCREEN_CAPTURE_PLATFORM_SRC
+     include/demo/DemoFrameProcessor.h
+     src/demo/DemoFrameProcessor.cpp
+     src/demo/GetMonitors.cpp
+     src/demo/GetWindows.cpp
+     src/demo/ThreadRunner.cpp
+  )
+elseif(WIN32)
     set(SCREEN_CAPTURE_PLATFORM_SRC     
 		src/windows/GetWindows.cpp
 		src/windows/GetMonitors.cpp 

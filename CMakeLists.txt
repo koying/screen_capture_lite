@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 option(BUILD_DEMO "Build demo input" OFF)
+option(BUILD_V4L2 "Build v4l2 input" OFF)
 option(BUILD_SHARED_LIBS "Build shared library" OFF)
 option(BUILD_EXAMPLE "Build example" ON)
 
@@ -21,6 +22,14 @@ if(${BUILD_DEMO})
      src/demo/GetMonitors.cpp
      src/demo/GetWindows.cpp
      src/demo/ThreadRunner.cpp
+  )
+elseif(${BUILD_V4L2})
+  set(SCREEN_CAPTURE_PLATFORM_SRC
+     include/v4l2/V4L2FrameProcessor.h
+     src/v4l2/V4L2FrameProcessor.cpp
+     src/v4l2/GetMonitors.cpp
+     src/v4l2/GetWindows.cpp
+     src/v4l2/ThreadRunner.cpp
   )
 elseif(WIN32)
     set(SCREEN_CAPTURE_PLATFORM_SRC     
@@ -150,5 +159,7 @@ install (FILES
 	include/ScreenCapture.h 
 	DESTINATION include
 )
-enable_testing() 
-add_subdirectory(Example) 
+enable_testing()
+if(${BUILD_EXAMPLE}) 
+  add_subdirectory(Example) 
+endif()
